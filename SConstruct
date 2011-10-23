@@ -9,6 +9,6 @@ env.Append(CFLAGS=['-std=c99', '-fno-strict-aliasing'])
 #env.Append(CFLAGS='-Wall -Wextra -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations -Werror=declaration-after-statement')
 
 env.Append(CPPPATH = include_path, LIBPATH = library_path,
-        LIBS = ['cerberus'])
+        LIBS = ['crisscross'])
 
 Library('bin/cerberus', Glob('source/*.c'))
