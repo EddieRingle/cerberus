@@ -27,7 +27,3 @@
 #include "universal_include.h"
 
 #include "cerberus.h"
-
-bool crb_initialize(u_int flags);
-bool crb_enable(u_int flag);
-bool crb_disable(u_int flag);

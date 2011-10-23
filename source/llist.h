@@ -27,8 +27,9 @@
 #ifndef __included_llist_h
 #define __included_llist_h
 
+#include <stdbool.h>
+
 #include "universal_include.h"
-#include "cerberus.h"
 
 struct l_node {
     void          *data;
@@ -43,7 +44,7 @@ typedef struct {
     struct l_node *lastAccessedNode;
     int            lastAccessedIndex;
 
-    u_int          size;
+    int            size;
     bool           managed;
 } l_list;
 
