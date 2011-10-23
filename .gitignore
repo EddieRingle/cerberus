@@ -11,3 +11,5 @@ bin/*.ilk
 bin/*.pdb
 bin/preferences.txt
 source/.cflags
+cerberus.files
+cerberus.includes
