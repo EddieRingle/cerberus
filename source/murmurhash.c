@@ -77,6 +77,10 @@ void murmurhash3_x86_32 ( const void * key, int len,
     uint32_t c1 = 0xcc9e2d51;
     uint32_t c2 = 0x1b873593;
 
+    uint32_t k1;
+
+    const uint8_t *tail;
+
     /* body */
 
     const uint32_t * blocks = (const uint32_t *)(data + nblocks*4);
@@ -84,7 +88,7 @@ void murmurhash3_x86_32 ( const void * key, int len,
     int i = -nblocks;
     for(; i; i++)
     {
-      uint32_t k1 = getblock32(blocks,i);
+      k1 = getblock32(blocks,i);
 
       k1 *= c1;
       k1 = ROTL32(k1,15);
@@ -97,9 +101,9 @@ void murmurhash3_x86_32 ( const void * key, int len,
 
     /* tail */
 
-    const uint8_t * tail = (const uint8_t*)(data + nblocks*4);
+    tail = (const uint8_t*)(data + nblocks*4);
 
-    uint32_t k1 = 0;
+    k1 = 0;
 
     switch(len & 3)
     {
@@ -134,6 +138,10 @@ void murmurhash3_x86_128 ( const void * key, const int len,
     uint32_t c3 = 0x38b34ae5;
     uint32_t c4 = 0xa1e38b93;
 
+    uint32_t k1, k2, k3, k4;
+
+    const uint8_t *tail;
+
     /* body */
 
     const uint32_t * blocks = (const uint32_t *)(data + nblocks*16);
@@ -141,10 +149,10 @@ void murmurhash3_x86_128 ( const void * key, const int len,
     int i = -nblocks;
     for(; i; i++)
     {
-      uint32_t k1 = getblock32(blocks,i*4+0);
-      uint32_t k2 = getblock32(blocks,i*4+1);
-      uint32_t k3 = getblock32(blocks,i*4+2);
-      uint32_t k4 = getblock32(blocks,i*4+3);
+      k1 = getblock32(blocks,i*4+0);
+      k2 = getblock32(blocks,i*4+1);
+      k3 = getblock32(blocks,i*4+2);
+      k4 = getblock32(blocks,i*4+3);
 
       k1 *= c1; k1  = ROTL32(k1,15); k1 *= c2; h1 ^= k1;
 
@@ -165,12 +173,12 @@ void murmurhash3_x86_128 ( const void * key, const int len,
 
     /* tail */
 
-    const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
+    tail = (const uint8_t*)(data + nblocks*16);
 
-    uint32_t k1 = 0;
-    uint32_t k2 = 0;
-    uint32_t k3 = 0;
-    uint32_t k4 = 0;
+    k1 = 0;
+    k2 = 0;
+    k3 = 0;
+    k4 = 0;
 
     switch(len & 15)
     {
@@ -231,6 +239,10 @@ void murmurhash3_x64_128 ( const void * key, const int len,
     uint64_t c1 = BIG_CONSTANT(0x87c37b91114253d5);
     uint64_t c2 = BIG_CONSTANT(0x4cf5ad432745937f);
 
+    uint64_t k1, k2;
+
+    const uint8_t *tail;
+
     /* body */
 
     const uint64_t * blocks = (const uint64_t *)(data);
@@ -238,8 +250,8 @@ void murmurhash3_x64_128 ( const void * key, const int len,
     int i = 0;
     for(; i < nblocks; i++)
     {
-      uint64_t k1 = getblock64(blocks,i*2+0);
-      uint64_t k2 = getblock64(blocks,i*2+1);
+      k1 = getblock64(blocks,i*2+0);
+      k2 = getblock64(blocks,i*2+1);
 
       k1 *= c1; k1  = ROTL64(k1,31); k1 *= c2; h1 ^= k1;
 
@@ -252,10 +264,10 @@ void murmurhash3_x64_128 ( const void * key, const int len,
 
     /* tail */
 
-    const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
+    tail = (const uint8_t*)(data + nblocks*16);
 
-    uint64_t k1 = 0;
-    uint64_t k2 = 0;
+    k1 = 0;
+    k2 = 0;
 
     switch(len & 15)
     {

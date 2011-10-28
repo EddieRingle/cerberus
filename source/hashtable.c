@@ -28,14 +28,18 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "crisscross/string_utils.h"
+
 #include "universal_include.h"
 #include "hashtable.h"
 #include "murmurhash.h"
 
 HashTable *crb_hashtable_create(uint32_t _size) {
+    HashTable *tbl;
+    int i;
+
     if (_size < 1) _size = 32;
 
-    HashTable *tbl;
     if ((tbl = malloc(sizeof(HashTable))) == NULL) {
         return NULL;
     }
@@ -44,8 +48,7 @@ HashTable *crb_hashtable_create(uint32_t _size) {
         return NULL;
     }
 
-    int i = 0;
-    for (; i < _size; i++) {
+    for (i = 0; i < _size; i++) {
         tbl->table[i] = NULL;
     }
 
@@ -69,14 +72,17 @@ void crb_hashtable_destroy(HashTable *_tbl) {
 }
 
 void crb_hashtable_grow(HashTable *_tbl) {
+    unsigned int oldSize;
+    struct table_entry **oldTable;
+    unsigned int i;
+
     if (_tbl == NULL) return;
 
-    unsigned int oldSize = _tbl->capacity;
+    oldSize = _tbl->capacity;
     _tbl->capacity *= 2;
-    struct table_entry **oldTable = _tbl->table;
+    oldTable = _tbl->table;
     memset(_tbl->table, 0, sizeof(struct table_entry *) * _tbl->capacity);
-    unsigned int i = 0;
-    for (; i < oldSize; i++) {
+    for (i = 0; i < oldSize; i++) {
         if (oldTable[i] != NULL) {
             crb_hashtable_insert(_tbl, oldTable[i]->key, oldTable[i]->value);
             free(oldTable[i]);
@@ -90,12 +96,15 @@ void crb_hashtable_hash(const char *_key, uint32_t *hash) {
 }
 
 bool crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data) {
+    struct table_entry *entry, *next_entry;
+
     if (_tbl == NULL || _key == NULL || _data == NULL) return false;
 
     if (_tbl->size == _tbl->capacity) {
         crb_hashtable_grow(_tbl);
     }
-    struct table_entry *entry = malloc(sizeof(struct table_entry));
+
+    entry = malloc(sizeof(struct table_entry));
     if (entry == NULL) return false;
     crb_hashtable_hash(_key, &entry->hash);
     entry->key = cc_strdup(_key);
@@ -105,7 +114,7 @@ bool crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data) {
     if (_tbl->table[entry->hash] == NULL) {
         _tbl->table[entry->hash] = entry;
     } else {
-        struct table_entry *next_entry = _tbl->table[entry->hash]->next;
+        next_entry = _tbl->table[entry->hash]->next;
         while (next_entry != NULL) {
             next_entry = next_entry->next;
         }
@@ -116,12 +125,13 @@ bool crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data) {
 }
 
 void *crb_hashtable_find(HashTable *_tbl, const char *_key) {
+    uint32_t hash;
+    struct table_entry *entry;
+
     if (_tbl == NULL || _key == NULL) return NULL;
 
-    uint32_t hash;
     crb_hashtable_hash(_key, &hash);
 
-    struct table_entry *entry;
     for (entry = _tbl->table[hash]; entry != NULL; entry = entry->next) {
         if (strcmp(_key, entry->key) == 0) return entry;
     }
@@ -130,13 +140,15 @@ void *crb_hashtable_find(HashTable *_tbl, const char *_key) {
 }
 
 void *crb_hashtable_remove(HashTable *_tbl, const char *_key) {
-    if (_tbl == NULL || _key == NULL) return NULL;
-
     uint32_t hash;
-    crb_hashtable_hash(_key, &hash);
-
     struct table_entry *entry, *sibling;
     bool top = true;
+    void *data;
+
+    if (_tbl == NULL || _key == NULL) return NULL;
+
+    crb_hashtable_hash(_key, &hash);
+
     for (entry = _tbl->table[hash]; entry != NULL; sibling = entry, entry = entry->next) {
         if (strcmp(_key, entry->key)) {
             break;
@@ -145,7 +157,7 @@ void *crb_hashtable_remove(HashTable *_tbl, const char *_key) {
         }
     }
     if (entry != NULL) {
-        void *data = entry->value;
+        data = entry->value;
         if (top) {
             _tbl->table[hash] = NULL;
         } else {
@@ -160,4 +172,6 @@ void *crb_hashtable_remove(HashTable *_tbl, const char *_key) {
         _tbl->size--;
         return data;
     }
+
+    return NULL;
 }

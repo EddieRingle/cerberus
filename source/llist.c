@@ -64,17 +64,18 @@ void crb_llist_destroy(LList *_list) {
 }
 
 struct l_node *crb_llist_getNode(LList *_list, int _index) {
+    struct l_node *node = NULL, *tracking;
+    int i;
+
     if (_list == NULL || _list->size == 0) {
         return NULL;
     }
-    struct l_node *node = NULL;
     if (_index == _list->lastAccessedIndex) {
         node = _list->lastAccessedNode;
     } else {
-        struct l_node *tracking;
         if ((_list->size - 1 - _index) <= (_list->size - 1) / 2) {
             tracking = _list->last;
-            int i = _list->size - 1;
+            i = _list->size - 1;
             for (; i > 0; i--) {
                 if (i == _index && tracking != NULL) {
                     node = tracking;
@@ -84,7 +85,7 @@ struct l_node *crb_llist_getNode(LList *_list, int _index) {
             }
         } else {
             tracking = _list->first;
-            int i = 0;
+            i = 0;
             for (; i < _list->size; i++) {
                 if (i == _index && tracking != NULL) {
                     node = tracking;
@@ -108,15 +109,17 @@ void *crb_llist_get(LList *_list, int _index) {
 }
 
 int crb_llist_insert(LList *_list, void *_data) {
+    struct l_node *node;
+
     if (_list == NULL || _data == NULL) {
         return -1;
     }
-    // Prepare a new node for insertion
-    struct l_node *node = malloc(sizeof(struct l_node));
+    /* Prepare a new node for insertion */
+    node = malloc(sizeof(struct l_node));
     node->data = _data;
 
     if (_list->size == 0) {
-        // We're inserting the very first node
+        /* We're inserting the very first node */
         _list->first = node;
         _list->last = node;
     } else {
@@ -130,16 +133,20 @@ int crb_llist_insert(LList *_list, void *_data) {
 }
 
 void *crb_llist_remove(LList *_list, int _index) {
+    struct l_node *node;
+    void *ret;
+
     if (_index < 0 || _index >= _list->size) {
         return NULL;
     }
-    struct l_node *node = crb_llist_getNode(_list, _index);
+
+    node = crb_llist_getNode(_list, _index);
     if (node != NULL) {
-        // Quietly slip out of town
+        /* Quietly slip out of town */
         node->prev->next = node->next;
         node->next->prev = node->prev;
-        // ... then get mugged
-        void *ret = node->data;
+        /* ... then get mugged */
+        ret = node->data;
         free(node);
         return ret;
     }
