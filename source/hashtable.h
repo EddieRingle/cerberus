@@ -57,4 +57,4 @@ bool       crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data);
 void      *crb_hashtable_find(HashTable *_tbl, const char *_key);
 void      *crb_hashtable_remove(HashTable *_tbl, const char *_key);
 
-#endif // __included_hashtable_h
+#endif /* __included_hashtable_h */

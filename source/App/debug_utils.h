@@ -28,7 +28,7 @@
 #ifndef __included_debug_utils_h
 #define __included_debug_utils_h
 
-//! Generates a crash log to the OS-appropriate location.
+/*! Generates a crash log to the OS-appropriate location.*/
 /*!
 	\param _msg The error message to print along with the crash log.
  */
@@ -69,9 +69,9 @@ void CerberusReleaseAssert_Helper ( const char *_format, ... );
 
 
 
-//
-// Abort - print message then bomb out (reset the resolution, too!)
-//
+/*
+   Abort - print message then bomb out (reset the resolution, too!)
+*/
 
 #ifdef DEBUGLOG_ENABLED
 

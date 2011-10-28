@@ -1,6 +1,7 @@
-//-----------------------------------------------------------------------------
+/*
 // MurmurHash3 was written by Austin Appleby, and is placed in the public
 // domain. The author hereby disclaims copyright to this source code.
+*/
 
 #include "murmurhash.h"
 
@@ -76,8 +77,7 @@ void murmurhash3_x86_32 ( const void * key, int len,
     uint32_t c1 = 0xcc9e2d51;
     uint32_t c2 = 0x1b873593;
 
-    //----------
-    // body
+    /* body */
 
     const uint32_t * blocks = (const uint32_t *)(data + nblocks*4);
 
@@ -95,8 +95,7 @@ void murmurhash3_x86_32 ( const void * key, int len,
       h1 = h1*5+0xe6546b64;
     }
 
-    //----------
-    // tail
+    /* tail */
 
     const uint8_t * tail = (const uint8_t*)(data + nblocks*4);
 
@@ -110,8 +109,7 @@ void murmurhash3_x86_32 ( const void * key, int len,
             k1 *= c1; k1 = ROTL32(k1,15); k1 *= c2; h1 ^= k1;
     };
 
-    //----------
-    // finalization
+    /* finalization */
 
     h1 ^= len;
 
@@ -136,8 +134,7 @@ void murmurhash3_x86_128 ( const void * key, const int len,
     uint32_t c3 = 0x38b34ae5;
     uint32_t c4 = 0xa1e38b93;
 
-    //----------
-    // body
+    /* body */
 
     const uint32_t * blocks = (const uint32_t *)(data + nblocks*16);
 
@@ -166,8 +163,7 @@ void murmurhash3_x86_128 ( const void * key, const int len,
       h4 = ROTL32(h4,13); h4 += h1; h4 = h4*5+0x32ac3b17;
     }
 
-    //----------
-    // tail
+    /* tail */
 
     const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
 
@@ -202,8 +198,7 @@ void murmurhash3_x86_128 ( const void * key, const int len,
              k1 *= c1; k1  = ROTL32(k1,15); k1 *= c2; h1 ^= k1;
     };
 
-    //----------
-    // finalization
+    /* finalization */
 
     h1 ^= len; h2 ^= len; h3 ^= len; h4 ^= len;
 
@@ -236,8 +231,7 @@ void murmurhash3_x64_128 ( const void * key, const int len,
     uint64_t c1 = BIG_CONSTANT(0x87c37b91114253d5);
     uint64_t c2 = BIG_CONSTANT(0x4cf5ad432745937f);
 
-    //----------
-    // body
+    /* body */
 
     const uint64_t * blocks = (const uint64_t *)(data);
 
@@ -256,8 +250,7 @@ void murmurhash3_x64_128 ( const void * key, const int len,
       h2 = ROTL64(h2,31); h2 += h1; h2 = h2*5+0x38495ab5;
     }
 
-    //----------
-    // tail
+    /* tail */
 
     const uint8_t * tail = (const uint8_t*)(data + nblocks*16);
 
@@ -286,8 +279,7 @@ void murmurhash3_x64_128 ( const void * key, const int len,
              k1 *= c1; k1  = ROTL64(k1,31); k1 *= c2; h1 ^= k1;
     };
 
-    //----------
-    // finalization
+    /* finalization */
 
     h1 ^= len; h2 ^= len;
 

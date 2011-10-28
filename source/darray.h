@@ -46,4 +46,4 @@ int     crb_darray_insert(DArray *_array, void *_data);
 void   *crb_darray_get(DArray *_array, int _index);
 void   *crb_darray_remove(DArray *_array, int _index);
 
-#endif // __included_darray_h
+#endif /* __included_darray_h */

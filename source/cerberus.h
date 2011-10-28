@@ -35,23 +35,23 @@
 #include "llist.h"
 #include "entity.h"
 
-// Core engine functions (initialize, enable/disable, and quit)
+/* Core engine functions (initialize, enable/disable, and quit) */
 bool    crb_initialize(int _flags);
 bool    crb_enable(int _flag);
 bool    crb_disable(int _flag);
 bool    crb_quit();
 
-// Logging functions
+/* Logging functions */
 void    crb_debug_out(const char *_msg);
 
-// Generic game loop
+/* Generic game loop */
 bool    crb_loop();
 
-// Input functions
+/* Input functions */
 int     crb_handle_input();
 
-// Graphics functions
+/* Graphics functions */
 bool    crb_gfx_setup_window(int _width, int _height, int _bpp, int _flags);
 int     crb_gfx_tex_from_image(const char *_image);
 
-#endif // __included_cerberus_h
+#endif /* __included_cerberus_h */

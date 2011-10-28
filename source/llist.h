@@ -84,4 +84,4 @@ void  *crb_llist_remove(LList *_list, int _index);
  */
 void   crb_llist_delete(LList *_list, int _index);
 
-#endif // __included_llist_h
+#endif /* __included_llist_h */

@@ -35,8 +35,8 @@
 struct Entity {
     int          id;
     const char    *name;
-    // Data::HashTable<behaviorFunc> behaviors;
-    // Data::HashTable<property_t *> properties;
+    /* Data::HashTable<behaviorFunc> behaviors; */
+    /* Data::HashTable<property_t *> properties; */
 
     struct Entity *parent;
     LList         *children;
@@ -44,7 +44,7 @@ struct Entity {
 
 typedef struct Entity Entity;
 
-typedef void(*behaviorFunc)(Entity*,float); // Putting this here for now
+typedef void(*behaviorFunc)(Entity*,float); /* Putting this here for now */
 
 int     crb_entity_create();
 Entity *crb_entity_get(int _id);
@@ -54,4 +54,4 @@ bool    crb_entity_add_behavior(Entity *_entity, const char *_name, behaviorFunc
 bool    crb_entity_remove_behavior(Entity *_entity, const char *_name);
 bool    crb_entity_destroy(int _id);
 
-#endif // __included_entity_h
+#endif /* __included_entity_h */

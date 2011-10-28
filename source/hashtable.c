@@ -33,7 +33,7 @@
 #include "murmurhash.h"
 
 HashTable *crb_hashtable_create(uint32_t _size) {
-    if (_size < 1) return NULL;
+    if (_size < 1) _size = 32;
 
     HashTable *tbl;
     if ((tbl = malloc(sizeof(HashTable))) == NULL) {

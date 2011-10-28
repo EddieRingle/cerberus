@@ -83,36 +83,36 @@
 #	undef ENABLE_DIRECT3D
 #endif
 
-//#define ENABLE_NETWORKING
+/* #define ENABLE_NETWORKING */
 
-//********************** SOUND **********************
-//#define USE_OPENAL        // In development
-#define USE_SDLMIXER        // Fully functional (best choice)
+/********************** SOUND **********************/
+/* #define USE_OPENAL        // In development */
+#define USE_SDLMIXER        /* Fully functional (best choice) */
 
 #if !( defined(USE_OPENAL) ^ defined(USE_SDLMIXER) )
 #    error You must select one and ONLY one sound engine.
 #endif
-//********************** SOUND **********************
+/********************** SOUND **********************/
 
-//******************* SCRIPTING *********************
+/******************* SCRIPTING *********************/
 #define USE_LUA
 
 #if !( defined(USE_LUA) )
 #    error You must select one and ONLY one scripting engine.
 #endif
-//******************* SCRIPTING *********************
+/******************* SCRIPTING *********************/
 
-//******************* NETWORKING ********************
+/******************* NETWORKING ********************/
 #ifdef ENABLE_NETWORKING
-#define USE_CRISSCROSS_NET    // Fully functional (best choice)
+#define USE_CRISSCROSS_NET    /* Fully functional (best choice) */
 
 #if !( defined(USE_CRISSCROSS_NET) )
 #    error You must select one and ONLY one networking engine.
 #endif
 #endif
-//******************* NETWORKING ********************
+/******************* NETWORKING ********************/
 
-// #define FORCE_VSYNC
+/* #define FORCE_VSYNC */
 
 #ifdef TARGET_COMPILER_VC
 #    if _MSC_VER >= 1300 && _MSC_VER < 1400
@@ -218,6 +218,6 @@ extern Uint32 fontid;
 #include "Graphics/rect.h"
 #include "Graphics/vertex.h"
 
-#endif // __cplusplus
+#endif /* __cplusplus */
 
 #endif
