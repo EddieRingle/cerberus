@@ -41,6 +41,7 @@ typedef struct DArray DArray;
 DArray *crb_darray_create();
 void    crb_darray_destroy(DArray *_array);
 
+void    crb_darray_grow(DArray *_array);
 int     crb_darray_insert(DArray *_array, void *_data);
 void   *crb_darray_get(DArray *_array, int _index);
 void   *crb_darray_remove(DArray *_array, int _index);
