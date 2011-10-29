@@ -43,23 +43,28 @@ LList *crb_llist_create(void *_data, bool _managed) {
     }
 }
 
-void crb_llist_destroy(LList *_list) {
-    if (_list != NULL && _list->first != NULL) {
-        bool managed = _list->managed;
-        struct l_node *node = _list->first;
-        while (node != NULL) {
-            if (managed) {
-                free(node->data);
-            }
-            if (node->next != NULL) {
-                node = node->next;
-                free(node->prev);
-                node->prev = NULL;
-            } else {
-                free(node);
-                node = NULL;
+void crb_llist_destroy(LList **_list) {
+    if (_list != NULL && *_list != NULL) {
+        if ((*_list)->first != NULL) {
+            bool managed = (*_list)->managed;
+            struct l_node *node = (*_list)->first;
+            while (node != NULL) {
+                if (managed) {
+                    free(node->data);
+                }
+                if (node->next != NULL) {
+                    node = node->next;
+                    free(node->prev);
+                    node->prev = NULL;
+                } else {
+                    free(node);
+                    node = NULL;
+                }
             }
         }
+        free(*_list);
+        *_list = NULL;
+        _list = NULL;
     }
 }
 
@@ -76,7 +81,7 @@ struct l_node *crb_llist_getNode(LList *_list, int _index) {
         if ((_list->size - 1 - _index) <= (_list->size - 1) / 2) {
             tracking = _list->last;
             i = _list->size - 1;
-            for (; i > 0; i--) {
+            for (; i >= 0; i--) {
                 if (i == _index && tracking != NULL) {
                     node = tracking;
                 } else {
@@ -89,7 +94,7 @@ struct l_node *crb_llist_getNode(LList *_list, int _index) {
             for (; i < _list->size; i++) {
                 if (i == _index && tracking != NULL) {
                     node = tracking;
-                } else {
+                } else if (tracking != NULL) {
                     tracking = tracking->next;
                 }
             }
@@ -117,6 +122,8 @@ int crb_llist_insert(LList *_list, void *_data) {
     /* Prepare a new node for insertion */
     node = malloc(sizeof(struct l_node));
     node->data = _data;
+    node->prev = NULL;
+    node->next = NULL;
 
     if (_list->size == 0) {
         /* We're inserting the very first node */
@@ -143,11 +150,25 @@ void *crb_llist_remove(LList *_list, int _index) {
     node = crb_llist_getNode(_list, _index);
     if (node != NULL) {
         /* Quietly slip out of town */
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
+        if (_index == 0) {
+            _list->first = node->next;
+        }
+        if (_index == _list->size - 1) {
+            _list->last = node->prev;
+        }
+        if (node->prev != NULL) {
+            node->prev->next = node->next;
+        }
+        if (node->next != NULL) {
+            node->next->prev = node->prev;
+        }
         /* ... then get mugged */
         ret = node->data;
         free(node);
+        node = NULL;
+        _list->size--;
+        _list->lastAccessedIndex = -1;
+        _list->lastAccessedNode = NULL;
         return ret;
     }
     return NULL;

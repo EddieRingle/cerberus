@@ -60,7 +60,7 @@ LList *crb_llist_create(void *_data, bool _managed);
  * Destroys a LList, also freeing memory of its nodes' data if the managed
  * flag is set
  */
-void   crb_llist_destroy(LList *_list);
+void   crb_llist_destroy(LList **_list);
 
 /**
  * Get data from an index in the specified LList
