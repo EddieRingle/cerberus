@@ -95,11 +95,89 @@ int crb_test_llist()
     return 0;
 }
 
-int main(int argc, char **argv) {
+int crb_test_darray()
+{
+    DArray *darray;
+    void *data;
+    size_t pos;
+    int i;
+
+    printf("Creating DArray:\n");
+    darray = crb_darray_create();
+    assert(darray != NULL);
+    printf("\tGOOD.\n");
+
+    printf("Inserting some values:\n");
+    pos = crb_darray_insert(darray, newStr("one"));
+    assert(pos != -1);
+    assert(crb_darray_get(darray, pos) != NULL);
+    assert(strcmp(crb_darray_get(darray, pos), "one") == 0);
+    pos = crb_darray_insert(darray, newStr("three"));
+    assert(pos != -1);
+    assert(crb_darray_get(darray, pos) != NULL);
+    assert(strcmp(crb_darray_get(darray, pos), "three") == 0);
+    pos = crb_darray_insert(darray, newStr("five"));
+    assert(pos != -1);
+    assert(crb_darray_get(darray, pos) != NULL);
+    assert(strcmp(crb_darray_get(darray, pos), "five") == 0);
+    pos = crb_darray_insert(darray, newStr("seven"));
+    assert(pos != -1);
+    assert(crb_darray_get(darray, pos) != NULL);
+    assert(strcmp(crb_darray_get(darray, pos), "seven") == 0);
+    printf("\tGOOD.\n");
+
+    printf("Testing some impossibilities:\n");
+    assert(darray->size == 4);
+    assert(crb_darray_get(darray, (unsigned int) -1) == NULL);
+    assert(crb_darray_get(darray, 3) != NULL);
+    printf("\tGOOD.\n");
+
+    printf("Deleting some values:\n");
+    data = crb_darray_remove(darray, 0);
+    assert(data != NULL);
+    free(data);
+    assert(darray->size == 3);
+    assert(crb_darray_get(darray, 0) == NULL);
+    assert(strcmp(crb_darray_get(darray, 1), "three") == 0);
+    assert(strcmp(crb_darray_get(darray, 3), "seven") == 0);
+    data = crb_darray_remove(darray, 3);
+    assert(data != NULL);
+    free(data);
+    assert(darray->size == 2);
+    assert(crb_darray_get(darray, 0) == NULL);
+    assert(strcmp(crb_darray_get(darray, 1), "three") == 0);
+    assert(strcmp(crb_darray_get(darray, 2), "five") == 0);
+    assert(crb_darray_get(darray, 3) == NULL);
+    printf("\tGOOD.\n");
+
+    printf("Clearing DArray:\n");
+    i = 0;
+    while (i < darray->capacity) {
+        data = crb_darray_remove(darray, i++);
+        if (data != NULL) {
+            free(data);
+        }
+    }
+    assert(darray->size == 0);
+    printf("\tGOOD.\n");
+
+    printf("Destroying DArray:\n");
+    crb_darray_destroy(&darray);
+    assert(darray == NULL);
+    printf("\tDONE.\n");
+
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
     printf("\n=== Cerberus Test Suite ===\n\n");
 
     printf(":: LinkedList ::\n");
     crb_test_llist();
+
+    printf("\n:: DArray ::\n");
+    crb_test_darray();
 
     printf("\nAll done :-)\n");
     return 0;

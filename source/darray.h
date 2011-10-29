@@ -32,6 +32,7 @@
 struct DArray {
     int  capacity;
     int  size;
+    int  highestIndex;
 
     void **data;
 };
@@ -39,7 +40,7 @@ struct DArray {
 typedef struct DArray DArray;
 
 DArray *crb_darray_create();
-void    crb_darray_destroy(DArray *_array);
+void    crb_darray_destroy(DArray **_array);
 
 void    crb_darray_grow(DArray *_array);
 int     crb_darray_insert(DArray *_array, void *_data);

@@ -25,6 +25,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "universal_include.h"
 #include "darray.h"
@@ -33,22 +34,37 @@ DArray *crb_darray_create() {
     DArray *array = malloc(sizeof(DArray));
     array->size = 0;
     array->capacity = 0;
+    array->highestIndex = 0;
+    array->data = NULL;
     return array;
 }
 
-void crb_darray_destroy(DArray *_array) {
-    if (_array != NULL) {
-        free(_array);
+void crb_darray_destroy(DArray **_array) {
+    if (_array != NULL && *_array != NULL) {
+        if ((*_array)->data != NULL) {
+            free((*_array)->data);
+        }
+        free(*_array);
+        *_array = NULL;
     }
 }
 
 void crb_darray_grow(DArray *_array) {
+    void **oldData;
+    int oldCapacity = _array->capacity;
+
     if (_array->capacity < 1) {
         _array->capacity = 32;
     } else {
         _array->capacity *= 2;
     }
-    _array->data = realloc(_array->data, _array->capacity);
+
+    oldData = _array->data;
+    _array->data = calloc(_array->capacity, 1);
+    if (oldCapacity > 0) {
+        memcpy(_array->data, oldData, oldCapacity);
+    }
+    free(oldData);
 }
 
 int crb_darray_insert(DArray *_array, void *_data) {
@@ -56,6 +72,7 @@ int crb_darray_insert(DArray *_array, void *_data) {
         if (_array->size == _array->capacity) {
             crb_darray_grow(_array);
         }
+        _array->highestIndex = _array->size;
         _array->data[_array->size] = _data;
         return _array->size++;
     }
@@ -63,16 +80,26 @@ int crb_darray_insert(DArray *_array, void *_data) {
 }
 
 void *crb_darray_get(DArray *_array, int _index) {
-    if (_array != NULL) {
-        return _array->data[_index];
+    if (_array != NULL && _array->data != NULL) {
+        if (_index >= 0 && _index < _array->capacity) {
+            return _array->data[_index];
+        }
     }
     return NULL;
 }
 
 void *crb_darray_remove(DArray *_array, int _index) {
     if (_array != NULL) {
-        void *data = _array->data[_index];
+        void *data;
+        if (_index > _array->highestIndex) {
+            return NULL;
+        }
+        data = _array->data[_index];
+        if (data == NULL) {
+            return NULL;
+        }
         _array->data[_index] = NULL;
+        _array->size--;
         return data;
     }
     return NULL;

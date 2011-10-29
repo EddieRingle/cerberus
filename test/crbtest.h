@@ -32,5 +32,6 @@
 #include <string.h>
 
 #include "../source/llist.h"
+#include "../source/darray.h"
 
 #endif /* __included_crbtest_h */
