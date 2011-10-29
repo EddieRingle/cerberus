@@ -24,6 +24,4 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
-
 #include "entity.h"

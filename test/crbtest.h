@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../source/cerberus.h"
 #include "../source/llist.h"
 #include "../source/darray.h"
 

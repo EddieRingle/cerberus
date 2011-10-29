@@ -27,8 +27,6 @@
 #ifndef __included_entity_h
 #define __included_entity_h
 
-#include "universal_include.h"
-
 #include "cerberus.h"
 #include "llist.h"
 

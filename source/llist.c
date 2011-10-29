@@ -26,7 +26,6 @@
 
 #include <stdlib.h>
 
-#include "universal_include.h"
 #include "llist.h"
 
 LList *crb_llist_create(void *_data, bool _managed) {

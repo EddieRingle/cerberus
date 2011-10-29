@@ -27,7 +27,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "universal_include.h"
 #include "darray.h"
 
 DArray *crb_darray_create() {

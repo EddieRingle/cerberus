@@ -29,8 +29,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-
-#include "universal_include.h"
+#include <assert.h>
 
 #include "llist.h"
 #include "entity.h"

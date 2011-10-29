@@ -29,8 +29,6 @@
 
 #include <stdbool.h>
 
-#include "universal_include.h"
-
 struct l_node {
     void          *data;
     struct l_node *next;

@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "universal_include.h"
 #include "murmurhash.h"
 
 struct table_entry {

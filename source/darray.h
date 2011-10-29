@@ -27,8 +27,6 @@
 #ifndef __included_darray_h
 #define __included_darray_h
 
-#include "universal_include.h"
-
 struct DArray {
     int  capacity;
     int  size;

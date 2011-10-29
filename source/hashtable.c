@@ -30,7 +30,6 @@
 
 #include "crisscross/string_utils.h"
 
-#include "universal_include.h"
 #include "hashtable.h"
 #include "murmurhash.h"
 
