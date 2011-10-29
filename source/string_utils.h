@@ -24,35 +24,11 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __included_cerberus_h
-#define __included_cerberus_h
+#ifndef __included_string_utils_h
+#define __included_string_utils_h
 
 #include "universal_include.h"
 
-/* Core engine functions (initialize, enable/disable, and quit) */
-bool    crb_initialize(int _flags);
-bool    crb_enable(int _flag);
-bool    crb_disable(int _flag);
-bool    crb_quit();
+char *crb_strdup(const char *_str);
 
-/* Logging functions */
-void    crb_debug_out(const char *_msg);
-
-/* Generic game loop */
-bool    crb_loop();
-
-/* Input functions */
-int     crb_handle_input();
-
-/* Graphics functions */
-bool    crb_gfx_setup_window(int _width, int _height, int _bpp, int _flags);
-int     crb_gfx_tex_from_image(const char *_image);
-
-#include "darray.h"
-#include "llist.h"
-#include "hashtable.h"
-#include "murmurhash.h"
-
-#include "entity.h"
-
-#endif /* __included_cerberus_h */
+#endif /* __included_string_utils_h */

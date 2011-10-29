@@ -169,6 +169,89 @@ int crb_test_darray()
     return 0;
 }
 
+int crb_test_hashtable()
+{
+    HashTable *ht;
+    char buf1[32];
+    char buf2[32];
+    const unsigned long max = 20;
+    unsigned long i;
+    void *data;
+
+    printf("Creating HashTable:\n");
+    ht = crb_hashtable_create(-1);
+    assert(ht != NULL);
+    printf("\tGOOD.\n");
+
+    printf("Inserting pairs:\n");
+    for (i = 0; i < max; i++) {
+        sprintf(buf1, "%lu", i);
+        sprintf(buf2, "%lu", max - i);
+
+        printf("Allocating new value for %s\n", buf1);
+        assert(crb_hashtable_insert(ht, buf1, newStr(buf2)));
+    }
+    printf("\tGOOD.\n");
+
+    printf("Finding every other pair:\n");
+    for (i = 0; i < max; i += 2) {
+        sprintf(buf1, "%lu", i);
+        assert(crb_hashtable_find(ht, buf1) != NULL);
+    }
+    printf("\tGOOD.\n");
+
+    printf("Deleting every other pair:\n");
+    for (i = 0; i < max; i += 2) {
+        sprintf(buf1, "%lu", i);
+        data = crb_hashtable_remove(ht, buf1);
+        assert(data != NULL);
+        printf("Deallocating value at %s\n", buf1);
+        free(data);
+        data = NULL;
+    }
+    printf("\tGOOD.\n");
+
+    printf("Trying to find those deleted pairs:\n");
+    for (i = 0; i < max; i += 2) {
+        sprintf(buf1, "%lu", i);
+        assert(crb_hashtable_find(ht, buf1) == NULL);
+    }
+    printf("\tGOOD.\n");
+
+    printf("Matching the remaining pairs:\n");
+    for (i = 1; i < max; i += 2) {
+        sprintf(buf1, "%lu", i);
+        sprintf(buf2, "%lu", max - i);
+        assert(strcmp(crb_hashtable_find(ht, buf1), buf2) == 0);
+    }
+    printf("\tGOOD.\n");
+
+    printf("Deleting the rest of the pairs:\n");
+    for (i = 1; i < max; i += 2) {
+        sprintf(buf1, "%lu", i);
+        data = crb_hashtable_remove(ht, buf1);
+        assert(data != NULL);
+        printf("Deallocating value at %s\n", buf1);
+        free(data);
+        data = NULL;
+    }
+    printf("\tGOOD.\n");
+
+    printf("Make sure table is empty:\n");
+    for (i = 0; i < max; i++) {
+        sprintf(buf1, "%lu", i);
+        assert(crb_hashtable_find(ht, buf1) == NULL);
+    }
+    printf("\tGOOD.\n");
+
+    printf("Deleting HashTable:\n");
+    crb_hashtable_destroy(&ht);
+    assert(ht == NULL);
+    printf("\tDONE.\n");
+
+    return 0;
+}
+
 int main(int argc, char **argv)
 {
     printf("\n=== Cerberus Test Suite ===\n\n");
@@ -178,6 +261,9 @@ int main(int argc, char **argv)
 
     printf("\n:: DArray ::\n");
     crb_test_darray();
+
+    printf("\n:: HashTable ::\n");
+    crb_test_hashtable();
 
     printf("\nAll done :-)\n");
     return 0;

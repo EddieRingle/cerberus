@@ -27,7 +27,8 @@
 #ifndef __included_entity_h
 #define __included_entity_h
 
-#include "cerberus.h"
+#include "universal_include.h"
+
 #include "llist.h"
 
 struct Entity {

@@ -27,13 +27,12 @@
 #ifndef __included_hashtable_h
 #define __included_hashtable_h
 
-#include <stdlib.h>
-#include <stdbool.h>
+#include "universal_include.h"
 
 #include "murmurhash.h"
 
 struct table_entry {
-    const char         *key;
+    char               *key;
     void               *value;
     uint32_t            hash;
     struct table_entry *next;
@@ -48,7 +47,7 @@ struct hash_table {
 typedef struct hash_table HashTable;
 
 HashTable *crb_hashtable_create(uint32_t _size);
-void       crb_hashtable_destroy(HashTable *_tbl);
+void       crb_hashtable_destroy(HashTable **_tbl);
 
 void       crb_hashtable_grow(HashTable *_tbl);
 void       crb_hashtable_hash(const char *_key, uint32_t *hash);

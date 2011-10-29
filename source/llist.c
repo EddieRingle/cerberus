@@ -24,8 +24,6 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <stdlib.h>
-
 #include "llist.h"
 
 LList *crb_llist_create(void *_data, bool _managed) {

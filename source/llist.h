@@ -27,7 +27,7 @@
 #ifndef __included_llist_h
 #define __included_llist_h
 
-#include <stdbool.h>
+#include "universal_include.h"
 
 struct l_node {
     void          *data;

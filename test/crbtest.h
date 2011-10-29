@@ -34,5 +34,6 @@
 #include "../source/cerberus.h"
 #include "../source/llist.h"
 #include "../source/darray.h"
+#include "../source/hashtable.h"
 
 #endif /* __included_crbtest_h */
