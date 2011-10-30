@@ -187,8 +187,6 @@ int crb_test_hashtable()
     for (i = 0; i < max; i++) {
         sprintf(buf1, "%lu", i);
         sprintf(buf2, "%lu", max - i);
-
-        printf("Allocating new value for %s\n", buf1);
         assert(crb_hashtable_insert(ht, buf1, newStr(buf2)));
     }
     printf("\tGOOD.\n");
@@ -205,7 +203,6 @@ int crb_test_hashtable()
         sprintf(buf1, "%lu", i);
         data = crb_hashtable_remove(ht, buf1);
         assert(data != NULL);
-        printf("Deallocating value at %s\n", buf1);
         free(data);
         data = NULL;
     }
@@ -231,7 +228,6 @@ int crb_test_hashtable()
         sprintf(buf1, "%lu", i);
         data = crb_hashtable_remove(ht, buf1);
         assert(data != NULL);
-        printf("Deallocating value at %s\n", buf1);
         free(data);
         data = NULL;
     }
