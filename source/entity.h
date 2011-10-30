@@ -30,27 +30,66 @@
 #include "universal_include.h"
 
 #include "llist.h"
+#include "darray.h"
+#include "hashtable.h"
 
-struct Entity {
-    int          id;
+enum {
+    TYPE_NONE,
+    TYPE_STRING,
+    TYPE_NUMBER,
+    TYPE_BOOLEAN
+};
+
+struct property {
+    int   type;
+    void *value;
+};
+
+struct entity;
+
+typedef void(*behaviorFunc)(struct entity*,float);
+
+struct behavior {
+    behaviorFunc  func;
+    const char   *name;
+};
+
+struct entity {
+    int            id;
     const char    *name;
-    /* Data::HashTable<behaviorFunc> behaviors; */
-    /* Data::HashTable<property_t *> properties; */
 
-    struct Entity *parent;
+    DArray        *behaviors;
+    HashTable     *properties;
+
+    struct entity *parent;
     LList         *children;
 };
 
-typedef struct Entity Entity;
+struct entity   *crb_entity_create(unsigned int _id, const char *_name);
+struct property *crb_entity_get_prop(struct entity *_entity, const char *_name);
+bool             crb_entity_set_prop(struct entity *_entity, const char *_name,
+                                     int _type, void *_value);
+bool             crb_entity_remove_prop(struct entity *_entity,
+                                        const char *_name);
+int              crb_entity_prop_type(struct entity *_entity,
+                                      const char *_name);
+int              crb_entity_get_string_prop(struct entity *_entity,
+                                            const char *_name,
+                                            const char **_val);
+int              crb_entity_get_number_prop(struct entity *_entity,
+                                            const char *_name, float *_val);
+int              crb_entity_get_boolean_prop(struct entity *_entity,
+                                             const char *_name, bool *_val);
+bool             crb_entity_has_behavior(struct entity *_entity,
+                                         const char *_name);
+struct behavior *crb_entity_get_behavior(struct entity *_entity,
+                                         const char *_name);
+bool             crb_entity_add_behavior(struct entity *_entity,
+                                         const char *_name, behaviorFunc _func);
+bool             crb_entity_remove_behavior(struct entity *_entity,
+                                            const char *_name);
+bool             crb_entity_destroy(struct entity **_entity);
 
-typedef void(*behaviorFunc)(Entity*,float); /* Putting this here for now */
-
-int     crb_entity_create();
-Entity *crb_entity_get(int _id);
-bool    crb_entity_set_prop(Entity *_entity, const char *_name, void *_value);
-void   *crb_entity_get_prop(Entity *_entity, const char *_name);
-bool    crb_entity_add_behavior(Entity *_entity, const char *_name, behaviorFunc _func);
-bool    crb_entity_remove_behavior(Entity *_entity, const char *_name);
-bool    crb_entity_destroy(int _id);
+#include "behavior.h"
 
 #endif /* __included_entity_h */
