@@ -1,3 +1,33 @@
-* Refactor Interface system and Widgets
-* Refactor Graphics system
-* Convert to library
+=== LOW-LEVEL STUFF ===
+DONE:
+* Linked List, DArray, and HashMap data structures
+
+ALPHA:
+* File I/O
+* State management
+* Console logging
+
+BETA:
+* Threading?
+
+=== FUN-LEVEL STUFF ===
+DONE:
+* Entities
+\ --> Behaviors & Properties
+
+ALPHA:
+* Game loop abstraction
+| --> Input hooks
+\ --> Scene hooks
+* SDL (Gfx, Audio, etc.)
+| --> OpenGL
+|   \ --> GLEW
+\ --> OpenAL
+* Scene management
+* Lua integration
+
+BETA:
+* Interface system
+\ --> Redirect console logging to in-game window for fun
+* Procedural generation helpers
+\ --> World generator
