@@ -1,3 +1,5 @@
+~~~~ v0.1 ~~~~
+
 === LOW-LEVEL STUFF ===
 DONE:
 * Linked List, DArray, and HashMap data structures
@@ -31,3 +33,11 @@ BETA:
 \ --> Redirect console logging to in-game window for fun
 * Procedural generation helpers
 \ --> World generator
+
+~~~~ v0.2 ~~~~
+
+=== LOW-LEVEL STUFF ===
+
+* Tree structures
+\ --> Space partitioning structures
+* Culling algorithms
