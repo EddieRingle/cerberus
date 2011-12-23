@@ -9,7 +9,10 @@ bin/*.dll
 bin/*.idb
 bin/*.ilk
 bin/*.pdb
+bin/*.so
+bin/*.so.*
 bin/preferences.txt
 source/.cflags
 cerberus.files
 cerberus.includes
+vendor/install
