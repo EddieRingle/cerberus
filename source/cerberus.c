@@ -25,3 +25,56 @@
  */
 
 #include "cerberus.h"
+
+static int initialized;
+
+bool crb_initialize(int _flags)
+{
+    if (_flags & CRB_INIT_ALL) {
+        initialized |= CRB_INIT_ALL;
+    } else {
+        if (_flags & CRB_INIT_GRAPHICS) {
+            initialized |= CRB_INIT_GRAPHICS;
+        }
+        if (_flags & CRB_INIT_SOUND) {
+            initialized |= CRB_INIT_SOUND;
+        }
+        if (_flags & CRB_INIT_INPUT) {
+            initialized |= CRB_INIT_INPUT;
+        }
+        if (_flags & CRB_INIT_NETWORK) {
+            initialized |= CRB_INIT_NETWORK;
+        }
+    }
+
+    if (initialized & CRB_INIT_GRAPHICS) {
+        crb_gfx_initialize();
+    }
+    return true;
+}
+
+bool crb_enable(int _flag)
+{
+    return true;
+}
+
+bool crb_disable(int _flag)
+{
+    return true;
+}
+
+bool crb_quit()
+{
+    if (initialized & CRB_INIT_GRAPHICS) {
+        crb_gfx_finish();
+    }
+
+    SDL_Quit();
+
+    return true;
+}
+
+void crb_debug_out(const char *_msg)
+{
+    printf("%s\n", _msg);
+}

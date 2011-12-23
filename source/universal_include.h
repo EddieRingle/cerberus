@@ -32,6 +32,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <GL/glew.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_opengl.h>
 
 #include "string_utils.h"
 

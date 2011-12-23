@@ -24,13 +24,32 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __included_crbtest_h
-#define __included_crbtest_h
+#ifndef __included_graphics_h
+#define __included_graphics_h
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "universal_include.h"
 
-#include "../source/cerberus.h"
+#include "hashtable.h"
 
-#endif /* __included_crbtest_h */
+struct texture {
+    /* SDL_Surface *surface; */
+    unsigned int id;
+
+    unsigned int originalWidth;
+    unsigned int originalHeight;
+
+    bool         damaged;
+    unsigned int alpha;
+};
+
+typedef struct texture Texture;
+
+bool    crb_gfx_initialize();
+bool    crb_gfx_setup_window(int _width, int _height, int _bpp, bool _windowed);
+bool    crb_gfx_bind_textures(Texture *_tex);
+bool    crb_gfx_bind_texture_by_id(unsigned int _id);
+int     crb_gfx_tex_from_image(const char *_image);
+bool    crb_gfx_destroy_window();
+bool    crb_gfx_finish();
+
+#endif /* __included_graphics_h */

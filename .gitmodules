@@ -43,3 +43,12 @@
 [submodule "contrib/toluapp"]
 	path = contrib/toluapp
 	url = git://github.com/eddieringle/toluapp.git
+[submodule "vendor/SDL"]
+	path = vendor/SDL
+	url = git://github.com/eddieringle/SDL.git
+[submodule "vendor/SDL_image"]
+	path = vendor/SDL_image
+	url = git://github.com/eddieringle/SDL_image.git
+[submodule "vendor/glew"]
+	path = vendor/glew
+	url = git://glew.git.sourceforge.net/gitroot/glew/glew

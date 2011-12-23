@@ -248,6 +248,15 @@ int crb_test_hashtable()
     return 0;
 }
 
+int crb_test_graphics()
+{
+    int i;
+    crb_initialize(CRB_INIT_ALL);
+    crb_gfx_setup_window(800, 600, 32, true);
+    crb_quit();
+    return 0;
+}
+
 int main(int argc, char **argv)
 {
     printf("\n=== Cerberus Test Suite ===\n\n");
@@ -260,6 +269,9 @@ int main(int argc, char **argv)
 
     printf("\n:: HashTable ::\n");
     crb_test_hashtable();
+
+    printf("\n:: Graphics ::\n");
+    crb_test_graphics();
 
     printf("\nAll done :-)\n");
     return 0;
