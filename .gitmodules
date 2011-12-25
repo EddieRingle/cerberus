@@ -40,8 +40,8 @@
 [submodule "contrib/smpeg"]
 	path = contrib/smpeg
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/smpeg.git
-[submodule "contrib/toluapp"]
-	path = contrib/toluapp
+[submodule "vendor/toluapp"]
+	path = vendor/toluapp
 	url = git://github.com/eddieringle/toluapp.git
 [submodule "vendor/SDL"]
 	path = vendor/SDL
@@ -52,3 +52,6 @@
 [submodule "vendor/glew"]
 	path = vendor/glew
 	url = git://glew.git.sourceforge.net/gitroot/glew/glew
+[submodule "vendor/lua"]
+	path = vendor/lua
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/lua.git
