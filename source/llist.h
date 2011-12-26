@@ -61,6 +61,11 @@ LList *crb_llist_create(void *_data, bool _managed);
 void   crb_llist_destroy(LList **_list);
 
 /**
+ * Find index by data
+ */
+int    crb_llist_find(LList *_list, void *_data);
+
+/**
  * Get data from an index in the specified LList
  */
 void  *crb_llist_get(LList *_list, int _index);

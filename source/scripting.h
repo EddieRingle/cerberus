@@ -24,12 +24,19 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "string_utils.h"
+#ifndef __included_scripting_h
+#define __included_scripting_h
 
-char *crb_strdup(const char *_str) {
-    size_t len = strlen(_str) + 1;
-    char *ret = malloc(len);
-    if (ret != NULL)
-        memcpy(ret, _str, len);
-    return ret;
-}
+#include "universal_include.h"
+
+#include "entity.h"
+
+bool           crb_scripting_init(const char *_dir);
+struct entity *crb_scripting_load_entity(const char *_file);
+bool           crb_scripting_run_script(const char *_name);
+void           crb_scripting_do_hook(struct entity *_entity, const char *_hook,
+                                     int _value);
+lua_State     *crb_scripting_get_state();
+bool           crb_scripting_finish();
+
+#endif /* __included_scripting_h */

@@ -47,23 +47,23 @@ struct property {
 
 struct entity;
 
-typedef void(*behaviorFunc)(struct entity*,float);
+typedef void(*behaviorFunc)(struct entity*,Uint32);
 
 struct behavior {
     behaviorFunc  func;
     const char   *name;
 };
 
-struct entity {
-    int            id;
-    const char    *name;
+struct entity { // tolua_export
+    int            id; // tolua_export
+    const char    *name; // tolua_export
 
     DArray        *behaviors;
     HashTable     *properties;
 
     struct entity *parent;
     LList         *children;
-};
+}; // tolua_export
 
 struct entity   *crb_entity_create(unsigned int _id, const char *_name);
 struct property *crb_entity_get_prop(struct entity *_entity, const char *_name);

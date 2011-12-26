@@ -37,6 +37,21 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_opengl.h>
 
+#include <lua.h>
+#include <lauxlib.h>
+#include <lualib.h>
+
+#include "platform_detect.h"
 #include "string_utils.h"
+
+#ifdef TARGET_OS_WINDOWS
+#      include <windows.h>
+#endif
+
+#ifdef TARGET_OS_LINUX
+#      include <sys/types.h>
+#      include <unistd.h>
+#      include <signal.h>
+#endif
 
 #endif /* __included_universal_include_h */

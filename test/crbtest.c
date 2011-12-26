@@ -179,7 +179,7 @@ int crb_test_hashtable()
     void *data;
 
     printf("Creating HashTable:\n");
-    ht = crb_hashtable_create(-1);
+    ht = crb_hashtable_create(0);
     assert(ht != NULL);
     printf("\tGOOD.\n");
 
@@ -250,9 +250,27 @@ int crb_test_hashtable()
 
 int crb_test_graphics()
 {
-    int i;
     crb_initialize(CRB_INIT_ALL);
     crb_gfx_setup_window(800, 600, 32, true);
+    crb_quit();
+    return 0;
+}
+
+int crb_test_game()
+{
+    struct entity *testMob;
+    struct scene *main;
+    float w = 100, h = 100;
+
+    crb_initialize(CRB_INIT_ALL);
+    crb_gfx_setup_window(800, 600, 32, true);
+    testMob = crb_entity_create(0, "TestMob");
+    crb_entity_set_prop(testMob, "width", TYPE_NUMBER, &w);
+    crb_entity_set_prop(testMob, "height", TYPE_NUMBER, &h);
+    crb_entity_add_behavior(testMob, "render", NULL);
+    main = crb_game_get_main_scene();
+    crb_scene_add_entity(main, testMob);
+    crb_loop();
     crb_quit();
     return 0;
 }
@@ -272,6 +290,9 @@ int main(int argc, char **argv)
 
     printf("\n:: Graphics ::\n");
     crb_test_graphics();
+
+    printf("\n:: Game ::\n");
+    crb_test_game();
 
     printf("\nAll done :-)\n");
     return 0;

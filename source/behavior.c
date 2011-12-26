@@ -39,7 +39,10 @@ int crb_behavior_register(const char *_name, behaviorFunc _func)
     if (crb_behavior_get(_name) != NULL) {
         return 0;
     } else {
+        printf("Adding behavior %s\n", _name);
         b = (struct behavior*)malloc(sizeof(struct behavior));
+        b->func = _func;
+        b->name = crb_strdup(_name);
         return crb_darray_insert(behaviors, b) > -1;
     }
 }
@@ -51,8 +54,10 @@ struct behavior *crb_behavior_get(const char *_name)
 
     b = crb_darray_get(behaviors, 0);
     for (i = 1; b != NULL; b = crb_darray_get(behaviors, i++)) {
-        if (!strcmp(b->name, _name)) {
-            return b;
+        if (b->name != NULL) {
+            if (!strcmp(b->name, _name)) {
+                return b;
+            }
         }
     }
 
@@ -66,10 +71,14 @@ int crb_behavior_unregister(const char *_name)
 
     b = crb_darray_get(behaviors, 0);
     for (i = 1; b != NULL; b = crb_darray_get(behaviors, i++)) {
-        if (!strcmp(b->name, _name)) {
-            crb_darray_remove(behaviors, i - 1);
-            free(b);
-            return 1;
+        if (b->name != NULL) {
+            if (!strcmp(b->name, _name)) {
+                printf("Removing behavior %s\n", _name);
+                crb_darray_remove(behaviors, i - 1);
+                free(b->name);
+                free(b);
+                return 1;
+            }
         }
     }
 

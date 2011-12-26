@@ -29,6 +29,10 @@
 LList *crb_llist_create(void *_data, bool _managed) {
     LList *list = malloc(sizeof(LList));
     list->size = 0;
+    list->first = NULL;
+    list->last = NULL;
+    list->lastAccessedIndex = -1;
+    list->lastAccessedNode = NULL;
     if (list == NULL) {
         return NULL;
     } else {
@@ -100,6 +104,19 @@ struct l_node *crb_llist_getNode(LList *_list, int _index) {
     _list->lastAccessedIndex = _index;
     _list->lastAccessedNode = node;
     return node;
+}
+
+int crb_llist_find(LList *_list, void *_data)
+{
+    int i;
+    struct l_node *node = NULL;
+
+    for(i = 0; i < _list->size; i++) {
+        node = crb_llist_getNode(_list, i);
+        if (node != NULL && node->data == _data)
+            return i;
+    }
+    return -1;
 }
 
 void *crb_llist_get(LList *_list, int _index) {

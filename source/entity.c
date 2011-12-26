@@ -28,14 +28,14 @@
 
 struct entity *crb_entity_create(unsigned int _id, const char *_name)
 {
-    struct entity *e = (struct entity*)malloc(sizeof(struct entity*));
+    struct entity *e = malloc(sizeof(struct entity));
 
     if (e != NULL) {
         e->id = _id;
+        e->parent = NULL;
         e->name = crb_strdup(_name);
         e->behaviors = crb_darray_create();
         e->properties = crb_hashtable_create(32);
-        e->parent = NULL;
         e->children = crb_llist_create(NULL, false);
     }
 
@@ -58,11 +58,10 @@ bool crb_entity_set_prop(struct entity *_entity, const char *_name,
         bool overwritten = (prop != NULL);
         bool sametype = overwritten;
         if (!overwritten) {
-            prop = (struct property*)malloc(sizeof(struct property));
+            prop = malloc(sizeof(struct property));
         } else if (prop->type != _type) {
             sametype = false;
             free(prop->value);
-            prop->value = NULL;
         }
         prop->type = _type;
         switch (_type) {
@@ -78,14 +77,18 @@ bool crb_entity_set_prop(struct entity *_entity, const char *_name,
             if (!(overwritten && sametype)) {
                 prop->value = malloc(sizeof(float));
             }
-            memmove(prop->value, _value, sizeof(float));
+            if (prop->value != NULL) {
+                memmove(prop->value, _value, sizeof(float));
+            }
             break;
         }
         case TYPE_BOOLEAN: {
             if (!(overwritten && sametype)) {
                 prop->value = malloc(sizeof(bool));
             }
-            memmove(prop->value, _value, sizeof(bool));
+            if (prop->value != NULL) {
+                memmove(prop->value, _value, sizeof(bool));
+            }
             break;
         }
         case TYPE_NONE: {
@@ -207,7 +210,7 @@ bool crb_entity_add_behavior(struct entity *_entity, const char *_name,
         if (f != NULL) {
             b = malloc(sizeof(struct behavior));
             b->name = crb_strdup(_name);
-            b->func = _func;
+            b->func = f;
             return crb_entity_has_behavior(_entity, _name)
                     ^ (crb_darray_insert(_entity->behaviors, b) > -1);
         }

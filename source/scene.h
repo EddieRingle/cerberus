@@ -24,12 +24,25 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "string_utils.h"
+#ifndef __included_scene_h
+#define __included_scene_h
 
-char *crb_strdup(const char *_str) {
-    size_t len = strlen(_str) + 1;
-    char *ret = malloc(len);
-    if (ret != NULL)
-        memcpy(ret, _str, len);
-    return ret;
-}
+#include "universal_include.h"
+
+#include "entity.h"
+#include "llist.h"
+
+struct scene {
+    bool          showing;
+    LList        *entities;
+    struct scene *overlay;
+};
+
+struct scene *crb_scene_create();
+void crb_scene_add_entity(struct scene *_scene, struct entity *_entity);
+void crb_scene_remove_entity(struct scene *_scene, struct entity *_entity);
+void crb_scene_render(struct scene *_scene, Uint32 _delta);
+void crb_scene_update(struct scene *_scene, Uint32 _delta);
+void crb_scene_destroy(struct scene **_scene);
+
+#endif /* __included_scene_h */

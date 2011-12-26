@@ -49,7 +49,7 @@ typedef struct hash_table HashTable;
 HashTable *crb_hashtable_create(uint32_t _size);
 void       crb_hashtable_destroy(HashTable **_tbl);
 
-void       crb_hashtable_grow(HashTable *_tbl);
+void       crb_hashtable_grow(HashTable *_tbl, uint32_t _size);
 void       crb_hashtable_hash(const char *_key, uint32_t *hash);
 bool       crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data);
 void      *crb_hashtable_find(HashTable *_tbl, const char *_key);

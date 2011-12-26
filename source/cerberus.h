@@ -35,17 +35,32 @@ static unsigned int CRB_INIT_SOUND = 0x0000FF00;
 static unsigned int CRB_INIT_INPUT = 0x00FF0000;
 static unsigned int CRB_INIT_NETWORK = 0xFF000000;
 
+struct app_info {
+    const char *app_path;
+    const char *support_path;
+};
+
 /* Core engine functions (initialize, enable/disable, and quit) */
 bool    crb_initialize(int _flags);
 bool    crb_enable(int _flag);
 bool    crb_disable(int _flag);
 bool    crb_quit();
 
+const char *crb_get_application_path();
+const char *crb_get_support_path();
+
 /* Logging functions */
 void    crb_debug_out(const char *_msg);
 
+/* Default scene getters */
+struct scene;
+
+struct scene *crb_game_get_main_scene();
+struct scene *crb_game_get_hud_scene();
+
 /* Generic game loop */
 bool    crb_loop();
+void    crb_loop_end();
 
 /* Input functions */
 int     crb_handle_input();
@@ -56,6 +71,8 @@ int     crb_handle_input();
 #include "murmurhash.h"
 
 #include "entity.h"
+#include "scene.h"
 #include "graphics.h"
+#include "scripting.h"
 
 #endif /* __included_cerberus_h */

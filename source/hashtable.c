@@ -31,6 +31,13 @@ HashTable *crb_hashtable_create(uint32_t _size) {
     tbl->size = 0;
     tbl->capacity = 0;
     tbl->table = NULL;
+
+    /* Grow once to start */
+    if (_size > 0)
+        crb_hashtable_grow(tbl, _size);
+    else
+        crb_hashtable_grow(tbl, 0);
+
     return tbl;
 }
 
@@ -47,7 +54,7 @@ void crb_hashtable_destroy(HashTable **_tbl) {
     *_tbl = NULL;
 }
 
-void crb_hashtable_grow(HashTable *_tbl) {
+void crb_hashtable_grow(HashTable *_tbl, uint32_t _size) {
     unsigned int oldCapacity;
     struct table_entry **oldTable;
     unsigned int i;
@@ -55,13 +62,17 @@ void crb_hashtable_grow(HashTable *_tbl) {
     if (_tbl == NULL) return;
 
     oldCapacity = _tbl->capacity;
-    if (_tbl->capacity > 0) {
-        _tbl->capacity *= 2;
+    if (_size <= oldCapacity) {
+        if (_tbl->capacity > 0) {
+            _tbl->capacity *= 2;
+        } else {
+            _tbl->capacity = 32;
+        }
     } else {
-        _tbl->capacity = 32;
+        _tbl->capacity = _size;
     }
     oldTable = _tbl->table;
-    _tbl->table = calloc(_tbl->capacity, sizeof(struct table_entry*));
+    _tbl->table = calloc(_tbl->capacity, sizeof(struct table_entry));
     for (i = 0; i < oldCapacity; i++) {
         if (oldTable[i] != NULL) {
             crb_hashtable_insert(_tbl, oldTable[i]->key, oldTable[i]->value);
@@ -82,7 +93,7 @@ bool crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data) {
     if (_tbl == NULL || _key == NULL || _data == NULL) return false;
 
     if (_tbl->size == _tbl->capacity) {
-        crb_hashtable_grow(_tbl);
+        crb_hashtable_grow(_tbl, -1);
     }
 
     entry = malloc(sizeof(struct table_entry));
@@ -111,11 +122,14 @@ bool crb_hashtable_insert(HashTable *_tbl, const char *_key, void *_data) {
 
 void *crb_hashtable_find(HashTable *_tbl, const char *_key) {
     uint32_t hash;
+    Uint32 index;
     struct table_entry *entry;
 
     if (_tbl == NULL || _key == NULL) return NULL;
 
     crb_hashtable_hash(_key, &hash);
+
+    index = hash % _tbl->capacity;
 
     for (entry = _tbl->table[hash % _tbl->capacity]; entry != NULL; entry = entry->next) {
         if (strcmp(_key, entry->key) == 0) return entry->value;

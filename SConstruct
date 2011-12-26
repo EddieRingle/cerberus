@@ -14,5 +14,6 @@ env.Append(LIB_PATH = "bin")
 env.Library('bin/cerberus', Glob('source/*.c'))
 
 env.Program('bin/crbtest', Glob('test/*.c'),
-                            LIBS = ['cerberus', 'SDL', 'GL', 'GLEW'],
+                            LIBS = ['cerberus', 'SDL', 'GL', 'GLEW', 
+'lua', 'toluapp', 'm'],
                             LIBPATH = ['bin', 'vendor/install/lib'])
