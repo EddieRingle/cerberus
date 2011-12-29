@@ -36,8 +36,8 @@ static unsigned int CRB_INIT_INPUT = 0x00FF0000;
 static unsigned int CRB_INIT_NETWORK = 0xFF000000;
 
 struct app_info {
-    const char *app_path;
-    const char *support_path;
+    char *app_path;
+    char *support_path;
 };
 
 /* Core engine functions (initialize, enable/disable, and quit) */

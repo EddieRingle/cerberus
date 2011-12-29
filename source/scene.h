@@ -38,11 +38,13 @@ struct scene {
     struct scene *overlay;
 };
 
-struct scene *crb_scene_create();
-void crb_scene_add_entity(struct scene *_scene, struct entity *_entity);
-void crb_scene_remove_entity(struct scene *_scene, struct entity *_entity);
-void crb_scene_render(struct scene *_scene, Uint32 _delta);
-void crb_scene_update(struct scene *_scene, Uint32 _delta);
-void crb_scene_destroy(struct scene **_scene);
+typedef struct scene Scene;
+
+Scene *crb_scene_create();
+void crb_scene_add_entity(Scene *_scene, Entity *_entity);
+void crb_scene_remove_entity(Scene *_scene, Entity *_entity);
+void crb_scene_render(Scene *_scene, Uint32 _delta);
+void crb_scene_update(Scene *_scene, Uint32 _delta);
+void crb_scene_destroy(Scene **_scene);
 
 #endif /* __included_scene_h */

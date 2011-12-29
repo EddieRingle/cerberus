@@ -26,9 +26,9 @@
 
 #include "scene.h"
 
-struct scene *crb_scene_create()
+Scene *crb_scene_create()
 {
-    struct scene *ret = (struct scene *)malloc(sizeof(struct scene));
+    Scene *ret = (Scene *)malloc(sizeof(Scene));
     ret->showing = true;
     ret->entities = crb_llist_create(NULL, false);
     ret->overlay = NULL;
@@ -36,24 +36,24 @@ struct scene *crb_scene_create()
     return ret;
 }
 
-void crb_scene_add_entity(struct scene *_scene, struct entity *_entity)
+void crb_scene_add_entity(Scene *_scene, Entity *_entity)
 {
     if (_scene != NULL && _entity != NULL)
         crb_llist_insert(_scene->entities, _entity);
 }
 
-void crb_scene_remove_entity(struct scene *_scene, struct entity *_entity)
+void crb_scene_remove_entity(Scene *_scene, Entity *_entity)
 {
     if (_scene != NULL && _entity != NULL)
         crb_llist_remove(_scene->entities,
                          crb_llist_find(_scene->entities, _entity));
 }
 
-void crb_scene_render(struct scene *_scene, Uint32 _delta)
+void crb_scene_render(Scene *_scene, Uint32 _delta)
 {
     int i;
-    struct behavior *b;
-    struct entity *e;
+    Behavior *b;
+    Entity *e;
 
     if (_scene != NULL && _scene->showing) {
         for (i = 0; i < _scene->entities->size; i++) {
@@ -68,12 +68,12 @@ void crb_scene_render(struct scene *_scene, Uint32 _delta)
     }
 }
 
-void crb_scene_update(struct scene *_scene, Uint32 _delta)
+void crb_scene_update(Scene *_scene, Uint32 _delta)
 {
     int i;
     int j;
-    struct behavior *b;
-    struct entity *e;
+    Behavior *b;
+    Entity *e;
 
     if (_scene != NULL && _scene->showing) {
         for (i = 0; i < _scene->entities->size; i++) {
@@ -90,7 +90,7 @@ void crb_scene_update(struct scene *_scene, Uint32 _delta)
     }
 }
 
-void crb_scene_destroy(struct scene **_scene)
+void crb_scene_destroy(Scene **_scene)
 {
     if (_scene != NULL && *_scene != NULL) {
         crb_llist_destroy(&((*_scene)->entities));

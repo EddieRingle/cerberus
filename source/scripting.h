@@ -31,12 +31,12 @@
 
 #include "entity.h"
 
-bool           crb_scripting_init(const char *_dir);
-struct entity *crb_scripting_load_entity(const char *_file);
-bool           crb_scripting_run_script(const char *_name);
-void           crb_scripting_do_hook(struct entity *_entity, const char *_hook,
-                                     int _value);
-lua_State     *crb_scripting_get_state();
-bool           crb_scripting_finish();
+bool       crb_scripting_init(const char *_dir);
+Entity    *crb_scripting_load_entity(const char *_file);
+bool       crb_scripting_run_script(const char *_name);
+void       crb_scripting_do_hook(Entity *_entity, const char *_hook,
+                                 int _value);
+lua_State *crb_scripting_get_state(void);
+bool       crb_scripting_finish(void);
 
 #endif /* __included_scripting_h */

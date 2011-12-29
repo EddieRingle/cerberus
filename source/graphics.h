@@ -29,30 +29,15 @@
 
 #include "universal_include.h"
 
-#include "entity.h"
-#include "hashtable.h"
+#include "texture.h"
 
-struct texture {
-    /* SDL_Surface *surface; */
-    unsigned int id;
-
-    unsigned int originalWidth;
-    unsigned int originalHeight;
-
-    bool         damaged;
-    unsigned int alpha;
-};
-
-typedef struct texture Texture;
-
-bool    crb_gfx_initialize();
-bool    crb_gfx_setup_window(int _width, int _height, int _bpp, bool _windowed);
-bool    crb_gfx_flip();
-bool    crb_gfx_bind_textures(Texture *_tex);
-bool    crb_gfx_bind_texture_by_id(unsigned int _id);
-int     crb_gfx_tex_from_image(const char *_image);
-bool    crb_gfx_draw_entity(struct entity *_entity);
-bool    crb_gfx_destroy_window();
-bool    crb_gfx_finish();
+bool (*crb_gfx_initialize)(void);
+bool (*crb_gfx_setup_window)(int, int, int, bool);
+bool (*crb_gfx_flip)(void);
+bool (*crb_gfx_bind_textures)(Texture*);
+bool (*crb_gfx_bind_texture_by_id)(unsigned int);
+int  (*crb_gfx_tex_from_image)(const char*);
+bool (*crb_gfx_destroy_window)(void);
+bool (*crb_gfx_finish)(void);
 
 #endif /* __included_graphics_h */

@@ -24,61 +24,21 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "behavior.h"
+#ifndef __included_graphics_opengl_h
+#define __included_graphics_opengl_h
 
-static DArray *behaviors;
+#include "universal_include.h"
 
-int crb_behavior_register(const char *_name, behaviorFunc _func)
-{
-    Behavior *b;
+#include "hashtable.h"
+#include "texture.h"
 
-    if (behaviors == NULL) {
-        behaviors = crb_darray_create();
-    }
+extern bool crb_ogl_initialize(void);
+extern bool crb_ogl_setup_window(int _width, int _height, int _bpp, bool _windowed);
+extern bool crb_ogl_flip(void);
+extern bool crb_ogl_bind_textures(Texture *_tex);
+extern bool crb_ogl_bind_texture_by_id(unsigned int _id);
+extern int  crb_ogl_tex_from_image(const char *_image);
+extern bool crb_ogl_destroy_window(void);
+extern bool crb_ogl_finish(void);
 
-    if (crb_behavior_get(_name) != NULL) {
-        return 0;
-    } else {
-        b = (Behavior*)malloc(sizeof(Behavior));
-        b->func = _func;
-        b->name = crb_strdup(_name);
-        return crb_darray_insert(behaviors, b) > -1;
-    }
-}
-
-Behavior *crb_behavior_get(const char *_name)
-{
-    Behavior *b;
-    int i;
-
-    b = crb_darray_get(behaviors, 0);
-    for (i = 1; b != NULL; b = crb_darray_get(behaviors, i++)) {
-        if (b->name != NULL) {
-            if (!strcmp(b->name, _name)) {
-                return b;
-            }
-        }
-    }
-
-    return NULL;
-}
-
-int crb_behavior_unregister(const char *_name)
-{
-    Behavior *b;
-    int i;
-
-    b = crb_darray_get(behaviors, 0);
-    for (i = 1; b != NULL; b = crb_darray_get(behaviors, i++)) {
-        if (b->name != NULL) {
-            if (!strcmp(b->name, _name)) {
-                crb_darray_remove(behaviors, i - 1);
-                free(b->name);
-                free(b);
-                return 1;
-            }
-        }
-    }
-
-    return 0;
-}
+#endif /* __included_graphics_opengl_h */

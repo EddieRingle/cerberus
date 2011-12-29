@@ -68,7 +68,6 @@ bool crb_scripting_init(const char *_dir)
 
     luaL_openlibs(state->luas);
 
-
     crb_scripting_register_entity(state->luas);
 
     return true;
@@ -114,7 +113,7 @@ bool crb_scripting_run_script(const char *_name)
     return false;
 }
 
-bool crb_scripting_finish()
+bool crb_scripting_finish(void)
 {
     lua_close(state->luas);
     state->luas = NULL;

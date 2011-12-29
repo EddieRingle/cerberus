@@ -32,8 +32,8 @@
 #include "darray.h"
 #include "entity.h"
 
-int              crb_behavior_register(const char *_name, behaviorFunc _func);
-struct behavior *crb_behavior_get(const char *_name);
-int              crb_behavior_unregister(const char *_name);
+int       crb_behavior_register(const char *_name, behaviorFunc _func);
+Behavior *crb_behavior_get(const char *_name);
+int       crb_behavior_unregister(const char *_name);
 
 #endif /* __included_behavior_h */

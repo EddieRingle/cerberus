@@ -37,9 +37,10 @@
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_opengl.h>
 
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
+#include <luajit-2.0/lua.h>
+#include <luajit-2.0/lauxlib.h>
+#include <luajit-2.0/lualib.h>
+#include <luajit-2.0/luajit.h>
 
 #include "platform_detect.h"
 #include "string_utils.h"
@@ -52,6 +53,16 @@
 #      include <sys/types.h>
 #      include <unistd.h>
 #      include <signal.h>
+#endif
+
+#define USE_OPENGL
+/* Not implemented
+#define USE_SDL
+*/
+
+/* Only enable 3D rendering if we're using GL */
+#ifdef USE_OPENGL
+#define ALLOW_3D
 #endif
 
 #endif /* __included_universal_include_h */

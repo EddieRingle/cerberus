@@ -26,9 +26,9 @@
 
 #include "entity.h"
 
-struct entity *crb_entity_create(unsigned int _id, const char *_name)
+Entity *crb_entity_create(Uint32 _id, const char *_name)
 {
-    struct entity *e = malloc(sizeof(struct entity));
+    Entity *e = malloc(sizeof(Entity));
 
     if (e != NULL) {
         e->id = _id;
@@ -42,7 +42,7 @@ struct entity *crb_entity_create(unsigned int _id, const char *_name)
     return e;
 }
 
-struct property *crb_entity_get_prop(struct entity *_entity, const char *_name)
+Property *crb_entity_get_prop(Entity *_entity, const char *_name)
 {
     if (_entity != NULL && _name != NULL) {
         return crb_hashtable_find(_entity->properties, _name);
@@ -50,15 +50,15 @@ struct property *crb_entity_get_prop(struct entity *_entity, const char *_name)
     return NULL;
 }
 
-bool crb_entity_set_prop(struct entity *_entity, const char *_name,
-                         int _type, void *_value)
+bool crb_entity_set_prop(Entity *_entity, const char *_name, int _type,
+                         void *_value)
 {
     if (_entity != NULL && _name != NULL) {
-        struct property *prop = crb_hashtable_find(_entity->properties, _name);
+        Property *prop = crb_hashtable_find(_entity->properties, _name);
         bool overwritten = (prop != NULL);
         bool sametype = overwritten;
         if (!overwritten) {
-            prop = malloc(sizeof(struct property));
+            prop = malloc(sizeof(Property));
         } else if (prop->type != _type) {
             sametype = false;
             free(prop->value);
@@ -104,11 +104,10 @@ bool crb_entity_set_prop(struct entity *_entity, const char *_name,
     return false;
 }
 
-bool crb_entity_remove_prop(struct entity *_entity, const char *_name)
+bool crb_entity_remove_prop(Entity *_entity, const char *_name)
 {
     if (_entity != NULL && _name != NULL) {
-        struct property *prop = crb_hashtable_remove(_entity->properties,
-                                                     _name);
+        Property *prop = crb_hashtable_remove(_entity->properties, _name);
         if (prop == NULL) {
             return false;
         } else {
@@ -122,9 +121,9 @@ bool crb_entity_remove_prop(struct entity *_entity, const char *_name)
     return false;
 }
 
-int crb_entity_prop_type(struct entity *_entity, const char *_name)
+int crb_entity_prop_type(Entity *_entity, const char *_name)
 {
-    struct property *prop = crb_entity_get_prop(_entity, _name);
+    Property *prop = crb_entity_get_prop(_entity, _name);
     if (prop != NULL) {
         return prop->type;
     } else {
@@ -132,11 +131,11 @@ int crb_entity_prop_type(struct entity *_entity, const char *_name)
     }
 }
 
-int crb_entity_get_string_prop(struct entity *_entity, const char *_name,
+int crb_entity_get_string_prop(Entity *_entity, const char *_name,
                                const char **_val)
 {
     if (_entity != NULL && _name != NULL && _val != NULL) {
-        struct property *prop = crb_hashtable_find(_entity->properties, _name);
+        Property *prop = crb_hashtable_find(_entity->properties, _name);
         if (prop != NULL && prop->type == TYPE_STRING) {
             *_val = (const char *)prop->value;
             return 1;
@@ -145,11 +144,10 @@ int crb_entity_get_string_prop(struct entity *_entity, const char *_name,
     return 0;
 }
 
-int crb_entity_get_number_prop(struct entity *_entity, const char *_name,
-                               float *_val)
+int crb_entity_get_number_prop(Entity *_entity, const char *_name, float *_val)
 {
     if (_entity != NULL && _name != NULL && _val != NULL) {
-        struct property *prop = crb_hashtable_find(_entity->properties, _name);
+        Property *prop = crb_hashtable_find(_entity->properties, _name);
         if (prop != NULL && prop->type == TYPE_NUMBER) {
             memmove(_val, prop->value, sizeof(float));
             return 1;
@@ -158,11 +156,10 @@ int crb_entity_get_number_prop(struct entity *_entity, const char *_name,
     return 0;
 }
 
-int crb_entity_get_boolean_prop(struct entity *_entity, const char *_name,
-                                bool *_val)
+int crb_entity_get_boolean_prop(Entity *_entity, const char *_name, bool *_val)
 {
     if (_entity != NULL && _name != NULL && _val != NULL) {
-        struct property *prop = crb_hashtable_find(_entity->properties, _name);
+        Property *prop = crb_hashtable_find(_entity->properties, _name);
         if (prop != NULL && prop->type == TYPE_BOOLEAN) {
             memmove(_val, prop->value, sizeof(bool));
             return 1;
@@ -171,11 +168,11 @@ int crb_entity_get_boolean_prop(struct entity *_entity, const char *_name,
     return 0;
 }
 
-bool crb_entity_has_behavior(struct entity *_entity, const char *_name)
+bool crb_entity_has_behavior(Entity *_entity, const char *_name)
 {
     if (_entity != NULL && _name != NULL) {
         int i;
-        struct behavior *b = crb_darray_get(_entity->behaviors, 0);
+        Behavior *b = crb_darray_get(_entity->behaviors, 0);
         for (i = 1; b != NULL; b = crb_darray_get(_entity->behaviors, i++)) {
             if (!strcmp(b->name, _name)) {
                 return true;
@@ -185,12 +182,11 @@ bool crb_entity_has_behavior(struct entity *_entity, const char *_name)
     return false;
 }
 
-struct behavior *crb_entity_get_behavior(struct entity *_entity,
-                                         const char *_name)
+Behavior *crb_entity_get_behavior(Entity *_entity, const char *_name)
 {
     if (_entity != NULL && _name != NULL) {
         int i;
-        struct behavior *b = crb_darray_get(_entity->behaviors, 0);
+        Behavior *b = crb_darray_get(_entity->behaviors, 0);
         for (i = 1; b != NULL; b = crb_darray_get(_entity->behaviors, i++)) {
             if (!strcmp(b->name, _name)) {
                 return b;
@@ -200,15 +196,15 @@ struct behavior *crb_entity_get_behavior(struct entity *_entity,
     return NULL;
 }
 
-bool crb_entity_add_behavior(struct entity *_entity, const char *_name,
+bool crb_entity_add_behavior(Entity *_entity, const char *_name,
                              behaviorFunc _func)
 {
     if (_entity != NULL && _name != NULL) {
         behaviorFunc f = (_func == NULL) ? crb_behavior_get(_name)->func
                                          : _func;
-        struct behavior *b;
+        Behavior *b;
         if (f != NULL) {
-            b = malloc(sizeof(struct behavior));
+            b = malloc(sizeof(Behavior));
             b->name = crb_strdup(_name);
             b->func = f;
             return crb_entity_has_behavior(_entity, _name)
@@ -218,11 +214,11 @@ bool crb_entity_add_behavior(struct entity *_entity, const char *_name,
     return false;
 }
 
-bool crb_entity_remove_behavior(struct entity *_entity, const char *_name)
+bool crb_entity_remove_behavior(Entity *_entity, const char *_name)
 {
     if (_entity != NULL && _name != NULL) {
         int i;
-        struct behavior *b = crb_darray_get(_entity->behaviors, 0);
+        Behavior *b = crb_darray_get(_entity->behaviors, 0);
         for (i = 1; b != NULL; b = crb_darray_get(_entity->behaviors, i++)) {
             if (!strcmp(b->name, _name)) {
                 free((void*)b->name);
@@ -236,10 +232,10 @@ bool crb_entity_remove_behavior(struct entity *_entity, const char *_name)
     return false;
 }
 
-bool crb_entity_destroy(struct entity **_entity)
+bool crb_entity_destroy(Entity **_entity)
 {
-    struct behavior *b;
-    struct property *p;
+    Behavior *b;
+    Property *p;
     struct table_entry *r;
     int i;
     int s;

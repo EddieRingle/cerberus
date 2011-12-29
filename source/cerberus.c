@@ -42,7 +42,7 @@ static struct scene *main_scene;
 static struct scene *hud_scene;
 static struct app_info appinfo;
 
-behaviorFunc crb_behavior_render(struct entity *_entity, Uint32 _delta)
+void crb_behavior_render(Entity *_entity, Uint32 _delta)
 {
     if (_entity != NULL) {
         float width = 16, height = 16;
@@ -73,7 +73,6 @@ void _setup_app_info()
     char tempPath[2048];
     const char *homePath;
     char *ptr;
-    size_t ret;
 
     memset(tempPath, 0, sizeof(tempPath));
 
@@ -87,7 +86,7 @@ void _setup_app_info()
         strcpy(tempPath, ".\\");
     }
 #elif defined ( TARGET_OS_LINUX )
-    ret = readlink("/proc/self/exe", tempPath, sizeof(tempPath) - 1);
+    readlink("/proc/self/exe", tempPath, sizeof(tempPath) - 1);
     if (strlen(tempPath)) {
         ptr = &tempPath[strlen(tempPath)];
         while (*(--ptr) != '/');

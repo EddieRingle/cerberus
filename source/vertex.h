@@ -24,61 +24,17 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "behavior.h"
+#ifndef __included_vertex_h
+#define __included_vertex_h
 
-static DArray *behaviors;
+#include "universal_include.h"
 
-int crb_behavior_register(const char *_name, behaviorFunc _func)
-{
-    Behavior *b;
+struct vertex {
+    int x, y, z;
+    int r, g, b, a;
+    float tx, ty;
+};
 
-    if (behaviors == NULL) {
-        behaviors = crb_darray_create();
-    }
+typedef struct vertex Vertex;
 
-    if (crb_behavior_get(_name) != NULL) {
-        return 0;
-    } else {
-        b = (Behavior*)malloc(sizeof(Behavior));
-        b->func = _func;
-        b->name = crb_strdup(_name);
-        return crb_darray_insert(behaviors, b) > -1;
-    }
-}
-
-Behavior *crb_behavior_get(const char *_name)
-{
-    Behavior *b;
-    int i;
-
-    b = crb_darray_get(behaviors, 0);
-    for (i = 1; b != NULL; b = crb_darray_get(behaviors, i++)) {
-        if (b->name != NULL) {
-            if (!strcmp(b->name, _name)) {
-                return b;
-            }
-        }
-    }
-
-    return NULL;
-}
-
-int crb_behavior_unregister(const char *_name)
-{
-    Behavior *b;
-    int i;
-
-    b = crb_darray_get(behaviors, 0);
-    for (i = 1; b != NULL; b = crb_darray_get(behaviors, i++)) {
-        if (b->name != NULL) {
-            if (!strcmp(b->name, _name)) {
-                crb_darray_remove(behaviors, i - 1);
-                free(b->name);
-                free(b);
-                return 1;
-            }
-        }
-    }
-
-    return 0;
-}
+#endif /* __included_vertex_h */
