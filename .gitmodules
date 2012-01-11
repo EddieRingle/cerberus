@@ -1,48 +1,3 @@
-[submodule "contrib/crisscross"]
-	path = contrib/crisscross
-	url = git://github.com/tycho/crisscross.git
-[submodule "contrib/zlib"]
-	path = contrib/zlib
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/zlib.git
-[submodule "contrib/unrar"]
-	path = contrib/unrar
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/unrar.git
-[submodule "contrib/FTGL"]
-	path = contrib/FTGL
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/ftgl.git
-[submodule "contrib/lua"]
-	path = contrib/lua
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/lua.git
-[submodule "contrib/luajit"]
-	path = contrib/luajit
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit-2.x.git
-[submodule "contrib/glew"]
-	path = contrib/glew
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/glew.git
-[submodule "contrib/SDL"]
-	path = contrib/SDL
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/sdl.git
-[submodule "contrib/SDL_image"]
-	path = contrib/SDL_image
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/sdl-image.git
-[submodule "contrib/SDL_mixer"]
-	path = contrib/SDL_mixer
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/sdl-mixer.git
-[submodule "contrib/SDL_ttf"]
-	path = contrib/SDL_ttf
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-ttf.git
-[submodule "contrib/freetype"]
-	path = contrib/freetype
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/freetype.git
-[submodule "contrib/libpng"]
-	path = contrib/libpng
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/libpng.git
-[submodule "contrib/smpeg"]
-	path = contrib/smpeg
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/smpeg.git
-[submodule "vendor/toluapp"]
-	path = vendor/toluapp
-	url = git://github.com/eddieringle/toluapp.git
 [submodule "vendor/SDL"]
 	path = vendor/SDL
 	url = git://github.com/eddieringle/SDL.git
@@ -55,3 +10,6 @@
 [submodule "vendor/lua"]
 	path = vendor/lua
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/lua.git
+[submodule "vendor/luajit"]
+	path = vendor/luajit
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit-2.x.git
